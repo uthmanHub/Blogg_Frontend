@@ -45,7 +45,7 @@ input {
     width: 300px;
     padding: 20px;
     text-align: center;
-    font-size: medium;
+    font-size: large;
 }
 
 .about-btn {
@@ -55,11 +55,7 @@ input {
     align-self: center;
 }
 
-input:active,
-input:focus{
-    outline-color: orange;
-    color: orange;
-}
+
 
 
 

@@ -39,16 +39,16 @@ const OnePost = () => {
   }
   
   const handleDelete = (id) => {
-    navigate('/Dashboard')
     const url = `https://blogg-61bi.onrender.com/api/v1/posts/${id}`
-    //const url =  `http://localhost:5050/api/v1/posts/${id}`
-    axios.delete(url)
+    // const url =  `http://localhost:5050/api/v1/posts/${id}`
+    axios.delete(url, { headers: { Authorization:localStorage.getItem('SavedToken') }})
     .then((res) => {
       alert("post deleted");
     })
    .catch((err) => {
       setShowError(true) // set this to true when done
     });
+    navigate('/Dashboard')
   };
   
   
@@ -113,7 +113,7 @@ const OnePost = () => {
             {/* button for the crud operation */}
             <div className="update-post">
               <button onClick={() => setShowEdit(true)} style={{display: showEdit? 'none' : '' }} >Update</button>
-              <button onClick={() => handleDelete(data._id)} style={{display: auth.role === "admin"? " " : 'none'}} >Delete</button>
+              <button onClick={() => handleDelete(data._id)} style={{display: auth.role === "admin"? " " : ' '}} >Delete</button>
             </div>
 
             {/* input text for updating */}

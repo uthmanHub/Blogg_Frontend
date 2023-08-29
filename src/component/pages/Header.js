@@ -9,6 +9,7 @@ const Header = () => {
   const [auth, setAuth] = useContext(Ctx);
 
   const logOut = () => {
+    localStorage.clear()
     setAuth("");
   };
 
@@ -18,7 +19,7 @@ const Header = () => {
         <div>
           <img src={images[0]} alt="" className="book" />
         </div>
-        <h2 style={{color: 'white'}}>{auth.role}</h2>
+        <h2 style={{color: 'white'}}>{localStorage.getItem('userRole')}</h2>
         <div className="profile">
           <img src={images[1]} alt="" className="bell" />
           <img
@@ -31,22 +32,21 @@ const Header = () => {
 
       <div className={displayDropdown ? "dropdown" : "hide"}>
         <ul>
-          <p>Welcome <strong>{auth.name}</strong> </p>
+          <p>Welcome <strong>{localStorage.getItem('userName')}</strong> </p>
           <hr/>
           <Link to={"/Dashboard"} className="gg">
-            {" "}
             <li>Dashboard</li>
           </Link>
           <Link to={"/Dashboard/about"} className="gg">
-            {" "}
             <li>Profile</li>
           </Link>
           <Link to={"/Dashboard/post"} className="gg">
-            {" "}
             <li>Create Post</li>
           </Link>
           <hr/>
-          <li onClick={logOut}>Logout</li>
+          <Link className="gg">
+            <li onClick={logOut} >Logout</li>
+          </Link>
         </ul>
       </div>
     </>

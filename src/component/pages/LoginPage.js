@@ -3,12 +3,14 @@ import axios from "axios";
 import "./../assets/css/LoginPage.css";
 import { Ctx } from "./../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import Error from "./Error";
 // import { useAuth } from "../utills/auth";
 
 const LoginPage = () => {
   const [auth, setAuth] = useContext(Ctx);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false)
 
   const navigate = useNavigate()
 
@@ -36,45 +38,59 @@ const LoginPage = () => {
 
   // const auth = useAuth()
 
-  const handleSubmit = async (e) => {
+  const handleSubmit =  (e) => {
     e.preventDefault();
-    const response = await axios(requestInfo);
-    console.log(response)
-    const token = response.data.token;
-    const name = response.data.name;
-    const role = response.data.role;
-    setAuth({token,name, role})
-    navigate('/Dashboard')
+    axios(requestInfo)
+    .then(response => {
+      console.log(response)
+      const name = response.data.name;
+      const role = response.data.role;
+      let token = response.data.token;
+      localStorage.setItem("SavedToken", 'Bearer ' + token);
+      localStorage.setItem("userName", name);
+      localStorage.setItem("userRole", role);
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+      setAuth({token,name, role})
+      navigate('/Dashboard')
+    })
+    .catch(()=>{
+      setError(true)
+    })
     
   };
 
-
+ 
   return (
-    <div className="login">
-      <div className="signin">
-        <h1>Login </h1>
-        <hr />
-        <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            onChange={trackEmail}
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            onChange={trackPassword}
-            required
-          />
-          <button className="login-btn" type="submit">
-            login
-          </button>
-        </form>
-      </div>
-    </div>
+    <>
+      {error ? <Error message={"Oops, invalid details. Check your details and try again"}/>
+      :     
+        <div className="login">
+          <div className="signin">
+            <h1>Login </h1>
+            <hr />
+            <form onSubmit={handleSubmit}>
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                onChange={trackEmail}
+                required
+              />
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                onChange={trackPassword}
+                required
+              />
+              <button className="login-btn" type="submit">
+                login
+              </button>
+            </form>
+          </div>
+        </div>
+      }
+    </>
   );
 };
 

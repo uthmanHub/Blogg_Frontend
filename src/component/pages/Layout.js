@@ -10,7 +10,7 @@ const Layout = () => {
   const [auth] = useContext(Ctx)
   return (
     <div>
-      {auth?
+      {auth.token?
       <>
         <Header/>
         <Outlet/>
