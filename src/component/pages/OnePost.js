@@ -113,7 +113,7 @@ const OnePost = () => {
             {/* button for the crud operation */}
             <div className="update-post">
               <button onClick={() => setShowEdit(true)} style={{display: showEdit? 'none' : '' }} >Update</button>
-              <button onClick={() => handleDelete(data._id)} style={{display: auth.role === "admin"? " " : ' '}} >Delete</button>
+              <button onClick={() => handleDelete(data._id)} style={{display: auth.role === "admin"? " " : 'none'}} >Delete</button>
             </div>
 
             {/* input text for updating */}
