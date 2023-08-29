@@ -44,11 +44,11 @@ const OnePost = () => {
     axios.delete(url, { headers: { Authorization:localStorage.getItem('SavedToken') }})
     .then((res) => {
       alert("post deleted");
+      navigate('/Dashboard')
     })
    .catch((err) => {
       setShowError(true) // set this to true when done
     });
-    navigate('/Dashboard')
   };
   
   
